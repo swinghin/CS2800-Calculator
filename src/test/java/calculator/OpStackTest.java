@@ -15,6 +15,15 @@ import org.junit.jupiter.api.Test;
 public class OpStackTest {
 
   /**
+   * Test method for {@link calculator.OpStack#isEmpty()}.
+   */
+  @Test
+  public void testIsEmpty() {
+    OpStack testOpStack = new OpStack();
+    assertEquals(true, testOpStack.isEmpty());
+  }
+
+  /**
    * Test method for {@link calculator.OpStack#push(Symbol)}.
    */
   @Test
@@ -23,7 +32,8 @@ public class OpStackTest {
     OpStack testOpStack = new OpStack();
     // push a new Symbol to testStack
     testOpStack.push(Symbol.PLUS);
-    // OpStack should not be empty
+
+    // OpStack should not be empty after push
     assertEquals(false, testOpStack.isEmpty());
   }
 
@@ -34,7 +44,7 @@ public class OpStackTest {
   public void testEmptyPop() {
     // create new empty OpStack testOpStack
     OpStack testOpStack = new OpStack();
-    // OpStack should not be empty
+    // Empty opStack should throw EmptyStackException
     assertThrows(EmptyStackException.class, () -> {
       testOpStack.pop();
     });
@@ -49,16 +59,11 @@ public class OpStackTest {
     OpStack testOpStack = new OpStack();
     // push a new float to testStack
     testOpStack.push(Symbol.PLUS);
-    testOpStack.pop();
-    assertEquals(true, testOpStack.isEmpty());
-  }
 
-  /**
-   * Test method for {@link calculator.OpStack#isEmpty()}.
-   */
-  @Test
-  public void testIsEmpty() {
-    OpStack testOpStack = new OpStack();
+    // pop entry from testOpStack, should return top entry
+    assertEquals(Symbol.PLUS, testOpStack.pop());
+
+    // stack size should be 0 after pop
     assertEquals(true, testOpStack.isEmpty());
   }
 

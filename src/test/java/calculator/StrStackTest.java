@@ -15,6 +15,15 @@ import org.junit.jupiter.api.Test;
 public class StrStackTest {
 
   /**
+   * Test method for {@link calculator.StrStack#isEmpty()}.
+   */
+  @Test
+  public void testIsEmpty() {
+    StrStack testStrStack = new StrStack();
+    assertEquals(true, testStrStack.isEmpty());
+  }
+
+  /**
    * Test method for {@link calculator.StrStack#push(Symbol)}.
    */
   @Test
@@ -23,7 +32,8 @@ public class StrStackTest {
     StrStack testStrStack = new StrStack();
     // push a new Symbol to testStack
     testStrStack.push("3.14");
-    // StrStack should not be empty
+
+    // StrStack should not be empty after push
     assertEquals(false, testStrStack.isEmpty());
   }
 
@@ -34,7 +44,7 @@ public class StrStackTest {
   public void testEmptyPop() {
     // create new empty StrStack testStrStack
     StrStack testStrStack = new StrStack();
-    // StrStack should not be empty
+    // Empty StrStack should throw EmptyStackException
     assertThrows(EmptyStackException.class, () -> {
       testStrStack.pop();
     });
@@ -49,16 +59,11 @@ public class StrStackTest {
     StrStack testStrStack = new StrStack();
     // push a new float to testStack
     testStrStack.push("3.14");
-    testStrStack.pop();
-    assertEquals(true, testStrStack.isEmpty());
-  }
 
-  /**
-   * Test method for {@link calculator.StrStack#isEmpty()}.
-   */
-  @Test
-  public void testIsEmpty() {
-    StrStack testStrStack = new StrStack();
+    // pop entry from testNumStack, should return top entry
+    assertEquals("3.14", testStrStack.pop());
+
+    // stack size should be 0 after pop
     assertEquals(true, testStrStack.isEmpty());
   }
 

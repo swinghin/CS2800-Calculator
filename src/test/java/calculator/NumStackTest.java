@@ -15,6 +15,15 @@ import org.junit.jupiter.api.Test;
 public class NumStackTest {
 
   /**
+   * Test method for {@link calculator.NumStack#isEmpty()}.
+   */
+  @Test
+  public void testIsEmpty() {
+    NumStack testNumStack = new NumStack();
+    assertEquals(true, testNumStack.isEmpty());
+  }
+
+  /**
    * Test method for {@link calculator.NumStack#push(float)}.
    */
   @Test
@@ -23,7 +32,8 @@ public class NumStackTest {
     NumStack testNumStack = new NumStack();
     // push a new float to testStack
     testNumStack.push(3.14f);
-    // NumStack should not be empty
+    
+    // NumStack should not be empty after push
     assertEquals(false, testNumStack.isEmpty());
   }
 
@@ -34,7 +44,7 @@ public class NumStackTest {
   public void testEmptyPop() {
     // create new empty NumStack testStack
     NumStack testNumStack = new NumStack();
-    // NumStack should not be empty
+    // Empty NumStack should throw EmptyStackException
     assertThrows(EmptyStackException.class, () -> {
       testNumStack.pop();
     });
@@ -49,16 +59,11 @@ public class NumStackTest {
     NumStack testNumStack = new NumStack();
     // push a new float to testStack
     testNumStack.push(3.14f);
-    testNumStack.pop();
-    assertEquals(true, testNumStack.isEmpty());
-  }
 
-  /**
-   * Test method for {@link calculator.NumStack#isEmpty()}.
-   */
-  @Test
-  public void testIsEmpty() {
-    NumStack testNumStack = new NumStack();
+    // pop entry from testNumStack, should return top entry
+    assertEquals(3.14f, testNumStack.pop());
+
+    // stack size should be 0 after pop
     assertEquals(true, testNumStack.isEmpty());
   }
 
