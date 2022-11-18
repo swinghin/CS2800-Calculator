@@ -11,6 +11,9 @@ import java.util.EmptyStackException;
  */
 public class NumStack {
 
+  /**
+   * {@link calculator.Stack} that stores {@link calculator.Entry}s of numerical values.
+   */
   private Stack numStack;
 
   /**
@@ -22,7 +25,8 @@ public class NumStack {
   }
 
   /**
-   * Accepts a numeric value and adds it to the {@link calculator.NumStack#numStack}.
+   * Accepts a numeric value and adds it as an {@link calculator.Entry} to the
+   * {@link calculator.NumStack#numStack}.
    * 
    * @param i Numeric value to be pushed into {@link calculator.NumStack#numStack}
    */
@@ -31,10 +35,11 @@ public class NumStack {
   }
 
   /**
-   * Gets the top {@link calculator.Entry} from {@link calculator.NumStack#numStack} removes it by
-   * calling pop(), get the numeric value from the {@link calculator.Entry} and returns it.
+   * Pops an {@link calculator.Entry} from {@link calculator.NumStack#numStack} and returns the
+   * numeric value from the {@link calculator.Entry}.
    * 
-   * @return float The top numeric value from {@link calculator.NumStack#numStack} as float.
+   * @return float The numeric value of the top {@link calculator.Entry} from
+   *         {@link calculator.NumStack#numStack}.
    * @throws EmptyStackException Throws EmptyStackException when
    *         {@link calculator.NumStack#numStack} is empty.
    */
