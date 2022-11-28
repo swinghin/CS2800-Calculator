@@ -42,27 +42,22 @@ public class RevPolishCalc implements Calculator {
           values.push(operand);
         } catch (NumberFormatException nfe) {
           try {
-            // NumberFormatException means item not number, possibly an operator
-            
-            // pop the top operand first
-            float topValue = values.pop();
-            
-            // Now check if it is a valid symbol (+ - * /)
+            // NumberFormatException means item not number, now check if it is a valid symbol (+-*/)
             switch (items[i]) {
               case "+":
-                values.push(values.pop() + topValue);
+                values.push(values.pop() + values.pop());
                 break;
               case "-":
-                values.push(values.pop() - topValue);
+                values.push(-values.pop() + values.pop());
                 break;
               case "*":
-                values.push(values.pop() * topValue);
+                values.push(values.pop() * values.pop());
                 break;
               case "/":
-                values.push(values.pop() / topValue);
+                values.push(values.pop() / values.pop());
                 break;
               default:
-                // if not valid symbol (+ - * /), would be invalid operator
+                // if not valid symbol (+-*/), would be invalid operator
                 throw new InvalidExpressionException("Invalid Expression: Invalid operator");
             }
           } catch (EmptyStackException ese) {
