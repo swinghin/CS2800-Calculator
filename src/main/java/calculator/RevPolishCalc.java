@@ -1,7 +1,6 @@
 package calculator;
 
 import java.util.EmptyStackException;
-import java.util.Scanner;
 
 /**
  * Evaluates Reverse Polish String Expressions.
@@ -43,21 +42,26 @@ public class RevPolishCalc implements Calculator {
         } catch (NumberFormatException nfe) {
           try {
             // NumberFormatException means item not number, now check if it is a valid symbol (+-*/)
+
+            // pop the top operand first
+            float topValue = values.pop();
+
+            // Now check if it is a valid symbol (+ - * /)
             switch (items[i]) {
               case "+":
-                values.push(values.pop() + values.pop());
+                values.push(values.pop() + topValue);
                 break;
               case "-":
-                values.push(-values.pop() + values.pop());
+                values.push(values.pop() - topValue);
                 break;
               case "*":
-                values.push(values.pop() * values.pop());
+                values.push(values.pop() * topValue);
                 break;
               case "/":
-                values.push(values.pop() / values.pop());
+                values.push(values.pop() / topValue);
                 break;
               default:
-                // if not valid symbol (+-*/), would be invalid operator
+                // if not valid symbol (+ - * /), would be invalid operator
                 throw new InvalidExpressionException("Invalid Expression: Invalid operator");
             }
           } catch (EmptyStackException ese) {

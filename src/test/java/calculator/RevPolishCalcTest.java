@@ -88,7 +88,7 @@ class RevPolishCalcTest {
   void testEvaluateDivide() {
     // Entering a simple division should return correct result
     try {
-      assertEquals(1f / 2f, this.rpCalc.evaluate("2 1 /"));
+      assertEquals(1f / 2f, this.rpCalc.evaluate("1 2 /"));
     } catch (InvalidExpressionException e) {
       e.printStackTrace();
     }
@@ -140,7 +140,7 @@ class RevPolishCalcTest {
   void testEvaluateDivideTwice() {
     // Two additions should be evaluated in order
     try {
-      assertEquals(1f / 2f / 3f, this.rpCalc.evaluate("3 2 1 / /"));
+      assertEquals(1f / 2f / 3f, this.rpCalc.evaluate("1 2 / 3 /"));
     } catch (InvalidExpressionException e) {
       e.printStackTrace();
     }
@@ -166,7 +166,7 @@ class RevPolishCalcTest {
   void testEvaluateAddDivide() {
     // Add before division
     try {
-      assertEquals((1 + 2) / 3f, this.rpCalc.evaluate("3 1 2 + /"));
+      assertEquals((1 + 2) / 3f, this.rpCalc.evaluate("1 2 + 3 /"));
     } catch (InvalidExpressionException e) {
       e.printStackTrace();
     }
@@ -208,7 +208,7 @@ class RevPolishCalcTest {
   void testEvaluateInvalidOp() {
     // rpCalc should throw exception when there is invalid symbols i.e. brackets
     assertThrows(InvalidExpressionException.class, () -> {
-      this.rpCalc.evaluate("(");
+      this.rpCalc.evaluate("1 (");
     });
   }
 
