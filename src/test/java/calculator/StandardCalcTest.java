@@ -166,7 +166,7 @@ class StandardCalcTest {
   void testEvaluateAddDivide() {
     // Add before division
     try {
-      assertEquals((1 + 2) / 3f, this.sCalc.evaluate("( 1 + 2 ) * 3"));
+      assertEquals((1 + 2) / 3f, this.sCalc.evaluate("( 1 + 2 ) / 3"));
     } catch (InvalidExpressionException e) {
       e.printStackTrace();
     }
@@ -179,8 +179,8 @@ class StandardCalcTest {
   void testEvaluateMultipleOp() {
     try {
       // Test Multiple operations in Reverse Polish Expression as in the example
-      assertEquals((5 * (6 + 7)) - 2, this.sCalc.evaluate("(5 * ( 6 + 7 ) ) - 2"));
-      assertEquals(63, this.sCalc.evaluate("(5 * ( 6 + 7 ) ) - 2"));
+      assertEquals((5 * (6 + 7)) - 2, this.sCalc.evaluate("( 5 * ( 6 + 7 ) ) - 2"));
+      assertEquals(63, this.sCalc.evaluate("( 5 * ( 6 + 7 ) ) - 2"));
     } catch (InvalidExpressionException e) {
       e.printStackTrace();
     }
