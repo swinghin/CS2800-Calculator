@@ -34,7 +34,7 @@
         <artifactId>javafx-maven-plugin</artifactId>
         <version>0.0.4</version>
         <configuration>
-          <mainClass>CalcController</mainClass>
+          <mainClass>calculator.CalcController</mainClass>
         </configuration>
       </plugin>
       <plugin>
