@@ -1,5 +1,6 @@
 package calculator;
 
+import java.util.Scanner;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,8 +24,8 @@ import javafx.stage.Stage;
  */
 public final class CalcController extends Application {
 
-  private CalcModel model = new CalcModel();
-  private boolean isInfix = true;
+  private static CalcModel model = new CalcModel();
+  private static boolean isInfix = true;
 
   /**
    * Main window for {@link calculator.CalcController}.
@@ -71,12 +72,12 @@ public final class CalcController extends Application {
   private TextField txtResult;
 
   /**
-   * Insets preset with 12px padding
+   * Insets preset with 12px padding.
    */
   private final Insets thickInset = new Insets(12f);
 
   /**
-   * Insets preset with 6px padding
+   * Insets preset with 6px padding.
    */
   private final Insets thinInset = new Insets(6f);
 
@@ -102,12 +103,43 @@ public final class CalcController extends Application {
   }
 
   /**
-   * Start CalcContoller.
+   * Main method: Run GUI if no console, text interface if launched from console.
    * 
    * @param args String arguments
    */
   public static void main(String[] args) {
-    launch(args);
+    // Determine if launched from console
+    if (System.console() == null) {
+      // If no console, launch GUI
+      launch(args);
+    } else {
+      // Accept user input with scanner
+      Scanner sc = new Scanner(System.in);
+      
+      // Ask for user expression as a line
+      System.out.println("Enter your expression: ");
+      String expression = sc.nextLine();
+      
+      // Echo expression to user
+      System.out.println("\nYour expression is: " + expression);
+      
+      // Ask for expression type as integer
+      System.out.println("Enter type of expression, 0 for Reverse Polish and 1 for Infix: ");
+      int type = sc.nextInt();
+      isInfix = type > 0 ? true : false;
+      
+      // Echo result to user
+      System.out.println("\nThe result of your expression in "
+          + (isInfix ? "Infix Notation" : "Reverse Polish Notation") + " is: ");
+      try {
+        // If expression is not invalid, print answer
+        System.out.println(model.evaluate(expression, isInfix));
+      } catch (InvalidExpressionException e) {
+        // If expression invalid, print the exception message 
+        System.out.println(e.getMessage());
+      }
+      sc.close();
+    }
   }
 
   /**
