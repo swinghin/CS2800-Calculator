@@ -19,22 +19,45 @@ public class GuiView implements ViewInterface {
   private String expression;
   private String answer;
 
+  /**
+   * Main window for {@link calculator.GuiView}.
+   */
   @FXML
   private Pane mainPane;
 
+  /**
+   * Label for {@link calculator.GuiView#txtExpression} TextField.
+   */
   @FXML
   private Label lblExpression;
+  /**
+   * TextField for user expression.
+   */
   @FXML
   private TextField txtExpression;
 
 
+  /**
+   * Limits the selection of {@link calculator.GuiView#rbnRevPol} and
+   * {@link calculator.GuiView#rbnInfix} to be mutually exclusive.
+   */
   @FXML
   private ToggleGroup togIsInfix;
+  /**
+   * RadioButton for choosing Reverse Polish mode.
+   */
   @FXML
   private RadioButton rbnRevPol;
+  /**
+   * RadioButton for choosing Infix mode.
+   */
   @FXML
   private RadioButton rbnInfix;
 
+  /**
+   * Button that starts the calculation, onAction set to
+   * {@link calculator.GuiView#addCalcObserver()}.
+   */
   @FXML
   private Button btnCalculate;
 
@@ -43,6 +66,9 @@ public class GuiView implements ViewInterface {
   @FXML
   private TextField txtResult;
 
+  /**
+   * Sets localised text to JavaFX controls in {@link calculator.GuiView}.
+   */
   @FXML
   protected void initialize() {
     lblExpression.setText("Expression");
@@ -54,24 +80,36 @@ public class GuiView implements ViewInterface {
     txtResult.setPromptText("Click 'Calculate' to get result...");
   }
 
+  /**
+   * Returns the string expression from user input in txtExpression TextField.
+   */
   @Override
   public String getExpression() {
     expression = txtExpression.getText();
     return expression;
   }
 
+  /**
+   * Sets the calculated answer from str and display it to txtResult TextField.
+   */
   @Override
   public void setAnswer(String str) {
     answer = str;
     txtResult.setText(answer);
   }
 
+  /**
+   * Is run when the user clicks the calculate button.
+   */
   @FXML
   @Override
   public void addCalcObserver() {
     CalcController.calculate();
   }
 
+  /**
+   * Is run when the radioButton selection changes.
+   */
   @FXML
   @Override
   public void addTypeObserver() {
