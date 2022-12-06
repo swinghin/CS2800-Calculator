@@ -1,9 +1,18 @@
 package calculator;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -14,30 +23,72 @@ import javafx.stage.Stage;
  */
 public final class CalcController extends Application {
 
-  private static CalcModel model = new CalcModel();
-  private static ViewInterface view;
-  private static boolean isInfix = true;
+  private CalcModel model = new CalcModel();
+  private boolean isInfix = true;
+
+  /**
+   * Main window for {@link calculator.CalcController}.
+   */
+  private Pane mainPane;
+
+  /**
+   * Label for {@link calculator.CalcController#txtExpression} TextField.
+   */
+  private Label lblExpression;
+  /**
+   * TextField for user expression.
+   */
+  private TextField txtExpression;
+
+
+  /**
+   * Limits the selection of {@link calculator.CalcController#rbnRevPol} and
+   * {@link calculator.CalcController#rbnInfix} to be mutually exclusive.
+   */
+  private ToggleGroup togIsInfix;
+  /**
+   * RadioButton for choosing Reverse Polish mode.
+   */
+  private RadioButton rbnRevPol;
+  /**
+   * RadioButton for choosing Infix mode.
+   */
+  private RadioButton rbnInfix;
+
+  /**
+   * Button that starts the calculation, onAction set to
+   * {@link calculator.GuiView#addCalcObserver()}.
+   */
+  private Button btnCalculate;
+
+  /**
+   * Label for {@link calculator.CalcController#txtResult} TextField.
+   */
+  private Label lblResult;
+
+  private TextField txtResult;
+
 
   /**
    * Is notified when a calculation is required.
    */
-  public static void calculate() {
+  public void calculate() {
     try {
-      view.setAnswer(String.valueOf(model.evaluate(view.getExpression(), isInfix)));
+      txtResult.setText(String.valueOf(model.evaluate(txtExpression.getText(), isInfix)));
     } catch (InvalidExpressionException e) {
-      view.setAnswer(e.getMessage());
+      txtResult.setText(e.getMessage());
     }
   }
 
   /**
    * Is notified when a change of expression type is indicated.
    */
-  public static void expressionType() {
+  public void expressionType() {
     isInfix = !isInfix;
   }
 
   /**
-   * Entry point for command line interface.
+   * Start CalcContoller.
    * 
    * @param args String arguments
    */
@@ -50,10 +101,44 @@ public final class CalcController extends Application {
    */
   @Override
   public void start(Stage primaryStage) throws Exception {
-    FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("GuiView.fxml"));
-    Pane pane = loader.load();
-    view = loader.getController();
-    Scene scene = new Scene(pane, 600, 400);
+
+    lblExpression = new Label();
+    lblExpression.setText("Expression");
+
+    txtExpression = new TextField();
+    txtExpression.setPromptText("Enter an expression...");
+
+    togIsInfix = new ToggleGroup();
+
+    rbnRevPol = new RadioButton();
+    rbnRevPol.setToggleGroup(togIsInfix);
+    rbnRevPol.setText("Reverse Polish");
+    rbnRevPol.setOnAction(event -> expressionType());
+
+    rbnInfix = new RadioButton();
+    rbnInfix.setToggleGroup(togIsInfix);
+    rbnInfix.setText("Infix");
+    rbnInfix.setSelected(isInfix);
+    rbnInfix.setOnAction(event -> expressionType());
+
+    btnCalculate = new Button();
+    btnCalculate.setText("Calculate");
+    btnCalculate.setOnAction(event -> calculate());
+
+    lblResult = new Label();
+    lblResult.setText("Result");
+
+    txtResult = new TextField();
+    txtResult.setEditable(false);
+    txtResult.setPromptText("Click 'Calculate' to get result...");
+
+
+
+    mainPane = new Pane();
+    mainPane.getChildren().add(new VBox(new HBox(lblExpression, txtExpression),
+        new HBox(rbnRevPol, rbnInfix), new HBox(btnCalculate), new HBox(lblResult, txtResult)));
+
+    Scene scene = new Scene(mainPane, 600, 400);
     primaryStage.setScene(scene);
     primaryStage.setTitle("CS2800 Calculator");
     primaryStage.show();
